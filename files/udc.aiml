@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+
+<!-- ================= MEMORY ================= -->
+
+<category>
+    <pattern>NAMA SAYA *</pattern>
+    <template>
+        Senang berkenalan denganmu, <set name="username"><star/></set>!
+    </template>
+</category>
+
+<category>
+    <pattern>SIAPA NAMA SAYA</pattern>
+    <template>
+        <condition>
+            <li name="username" value="unknown">Kamu belum memberi tahu namamu.</li>
+            <li>Kamu adalah <get name="username"/>.</li>
+        </condition>
+    </template>
+</category>
+
+<!-- ================ GREETING ================= -->
+
+<category>
+    <pattern>HALO</pattern>
+    <template>
+        <random>
+            <li>Halo! Apa kabar?</li>
+            <li>Hai! Senang bertemu lagi.</li>
+            <li>Halo! Ada yang ingin kamu pelajari?</li>
+        </random>
+        Aku memuat materi dari paper "Perbandingan Metode Bag of Words dan TF-IDF pada Klasifikasi Ujaran Kebencian Bahasa Indonesia dengan LightGBM".
+    </template>
+</category>
+
+<!-- ================ TOPIC SWITCHER ================ -->
+
+<category>
+    <pattern>AKTIFKAN PENDAHULUAN</pattern>
+    <template>
+        Baik, topik pendahuluan diaktifkan.
+        <set name="topic">pendahuluan</set>
+    </template>
+</category>
+
+<category>
+    <pattern>AKTIFKAN METODOLOGI</pattern>
+    <template>
+        Baik, topik metodologi diaktifkan.
+        <set name="topic">metodologi</set>
+    </template>
+</category>
+
+<category>
+    <pattern>SELESAI</pattern>
+    <template>
+        Topik ditutup.
+        <set name="topic">default</set>
+    </template>
+</category>
+
+<!-- ================================================= -->
+<!-- =================== TOPIC: PENDAHULUAN ========= -->
+<!-- ================================================= -->
+
+<topic name="pendahuluan">
+
+    <category>
+        <pattern>APA ITU UJARAN KEBENCIAN</pattern>
+        <template>
+            Ujaran kebencian adalah ekspresi yang menyerang individu atau kelompok berdasarkan ras, agama, etnis, gender, atau karakteristik lainnya.
+        </template>
+    </category>
+
+    <category>
+        <pattern>MENGAPA UJARAN KEBENCIAN BAHAYA</pattern>
+        <template>
+            Karena dapat memicu konflik, diskriminasi, dan memperburuk hubungan sosial.
+        </template>
+    </category>
+
+    <category>
+        <pattern>MENGAPA PERLU MENDETEKSI UJARAN KEBENCIAN</pattern>
+        <template>
+            Bahasa media sosial sering tidak baku dan penuh singkatan. Deteksi otomatis membantu mengidentifikasi konten negatif secara cepat.
+        </template>
+    </category>
+
+</topic>
+
+<!-- ================================================= -->
+<!-- ================== TOPIC: METODOLOGI =========== -->
+<!-- ================================================= -->
+
+<topic name="metodologi">
+
+    <category>
+        <pattern>DATASET APA YANG DIGUNAKAN</pattern>
+        <template>
+            Dataset: "Indonesian Twitter Hate Speech Cleaned" dari HuggingFace (18.148 data).
+        </template>
+    </category>
+
+    <category>
+        <pattern>APA SAJA TAHAP PREPROCESSING</pattern>
+        <template>
+            Preprocessing: hapus duplikat, stopwords, URL, emotikon, dan noise teks.
+        </template>
+    </category>
+
+    <category>
+        <pattern>APA ITU BAG OF WORDS</pattern>
+        <template>
+            Bag of Words menghitung frekuensi kata tanpa memperhatikan urutan kata.
+        </template>
+    </category>
+
+    <category>
+        <pattern>APA ITU TF IDF</pattern>
+        <template>
+            TF-IDF memberi bobot pada kata berdasarkan frekuensi dan kelangkaannya.
+        </template>
+    </category>
+
+    <category>
+        <pattern>BEDA BOW DAN TF IDF</pattern>
+        <template>
+            BOW = frekuensi kata.<br/>
+            TF-IDF = bobot berdasarkan kepentingan kata.
+        </template>
+    </category>
+
+    <category>
+        <pattern>APA ITU LIGHTGBM</pattern>
+        <template>
+            LightGBM adalah algoritma boosting berbasis pohon yang cepat dan efisien.
+        </template>
+    </category>
+
+    <category>
+        <pattern>PEMBAGIAN DATA</pattern>
+        <template>
+            70/30 dan 80/20 (train/test) untuk mencegah overfitting.
+        </template>
+    </category>
+
+</topic>
+
+<!-- ================================================= -->
+<!-- ========== Wildcard + Redirect (SRAI) =========== -->
+<!-- ================================================= -->
+
+<category>
+    <pattern>APA ITU *</pattern>
+    <template>
+        <srai>JELASKAN <star/></srai>
+    </template>
+</category>
+
+<category>
+    <pattern>JELASKAN BAG OF WORDS</pattern>
+    <template>Bag of Words merepresentasikan teks sebagai frekuensi kata.</template>
+</category>
+
+<category>
+    <pattern>JELASKAN TF IDF</pattern>
+    <template>TF-IDF menilai kepentingan sebuah kata di dalam dokumen.</template>
+</category>
+
+<category>
+    <pattern>JELASKAN LIGHTGBM</pattern>
+    <template>LightGBM adalah model gradient boosting yang sangat efisien.</template>
+</category>
+
+<!-- ================================================= -->
+<!-- ================== CONDITION LOGIC ============== -->
+<!-- ================================================= -->
+
+<category>
+    <pattern>APAKAH METODE TERBAIK</pattern>
+    <template>
+        <condition>
+            <li name="username" value="unknown">Tidak ada metode terbaik secara mutlak. Semua tergantung data.</li>
+            <li>Menurutku, <get name="username"/>, semua tergantung dataset.</li>
+        </condition>
+    </template>
+</category>
+
+<!-- ================================================= -->
+<!-- ================== CONTEXTUAL FLOW ============== -->
+<!-- ================================================= -->
+
+<category>
+    <pattern>KENAPA</pattern>
+    <that>Bag of Words merepresentasikan teks sebagai frekuensi kata.</that>
+    <template>
+        Karena BOW tidak mempertimbangkan hubungan antar kata dan hanya melihat frekuensi.
+    </template>
+</category>
+
+<!-- ================================================= -->
+<!-- ====================== FALLBACK ================= -->
+<!-- ================================================= -->
+
+<category>
+    <pattern>*</pattern>
+    <template>
+        Maaf, aku belum memahami pertanyaan itu.  
+        Aktifkan topik terlebih dahulu: "AKTIFKAN PENDAHULUAN" atau "AKTIFKAN METODOLOGI".
+    </template>
+</category>
+
+</aiml>
